@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chia mảnh bản đồ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="form-input">
+        <h2>Chia mảnh bản đồ</h3>
+        <div class="form-input__degree vi-do">
+            <p>Nhập vĩ độ:<p>
+            Độ:
+            <input type="number">
+            Phút:
+            <input type="number">
+            Giây:
+            <input type="number">
+            <input type="radio" name="vi_do" value="B"> Bắc
+            <input type="radio" name="vi_do" value="N"> Nam
+        </div>
+
+        <div class="form-input__degree kinh-do mb-4px">
+            <p>Nhập kinh độ:<p>
+            Độ:
+            <input type="number">
+            Phút:
+            <input type="number">
+            Giây:
+            <input type="number">
+            <input type="radio" name="kinh_do" value="D"> Đông
+            <input type="radio" name="kinh_do" value="T"> Tây
+        </div>
+
+        <button class="btn" onclick="lay_du_lieu('hn_72')">Chia mảnh HN-72</button>
+        <button class="btn" onclick="lay_du_lieu('vn2000')">Chia mảnh VN-2000</button>
+        <button class="btn" onclick="lay_du_lieu('utm_qt')">Chia mảnh UTM</button>
+        <p class="mt-16px">Chuyển sang tọa độ WGS-84:</p>
+        <div class="form-output-wgs84">
+            X:
+            <input type="text" style="margin-right: 8px;" id="geometry_wgs84_x" readonly>
+            Y:
+            <input type="text" id="geometry_wgs84_y" readonly>
+        </div>
+    </div>
+
+    <div class="form-input-right">
+        <h2>Chuyển đổi tọa độ vn-2000, wgs-84</h3>
+        <!-- <i>(Sử dụng công thức Molodensky 7 tham số)</i> -->
+        <div class="form-input__degree">
+            <p>Tọa độ vn-2000:<p>
+            X:
+            <input type="text" id="vn2000_x">
+            Y:
+            <input type="text" id="vn2000_y">
+            <p>Tọa độ wgs84:<p>
+            X:
+            <input type="text" id="wgs84_x">
+            Y:
+            <input type="text" id="wgs84_y">
+            <button class="btn" onclick="lay_toa_do('vn2000towgs84')">vn2000 to wgs84</button>
+            <button class="btn" onclick="lay_toa_do('wgs84tovn2000')">wgs84 to vn2000</button>
+        </div>
+    </div>
+
+    <div class="tree hn_72 hide_tree">
+        <strong style="font-size: 30px;">MẢNH BẢN ĐỒ HÀ NỘI 72</strong>
+        <ul>
+            <li>
+                <a href="#">
+                    <h3>1:1.000.000</h3>
+                    <p><i>(4°x6°)</i></p>
+                    <div id="hn_72_1000000"></div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <h3>1:500.000</h3>
+                            <p><i>(2°x3°)</i></p>
+                            <div id="hn_72_500000"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"><h3>1:250.000</h3>
+                            <p><i>(1°20'x2°)</i></p>
+                            <div id="hn_72_250000"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"><h3>1:200.000</h3>
+                            <p><i>(40'x1°)</i></p>
+                            <div id="hn_72_200000"></div>
+                        </a>
+                    </li>
+                    <li><a href="#" >
+                            <h3>1:100.000</h3>
+                            <p><i>(20'x30')</i></p>
+                            <div id="hn_72_100000"></div>
+                        </a>
+                        <ul>
+                            <li><a href="#" >
+                                    <h3>1:50.000</h3>
+                                    <p><i>(10'x15')</i></p>
+                                    <div id="hn_72_50000"></div>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#" >
+                                            <h3>1:25.000</h3>
+                                            <p><i>(5'x7'30'')</i></p>
+                                            <div id="hn_72_25000"></div>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a href="#" >
+                                                    <h3>1:10.000</h3>
+                                                    <p><i>(2'30''x3'45'')</i></p>
+                                                    <div id="hn_72_10000"></div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" >
+                                    <h3>1:5.000</h3>
+                                    <p><i>(1'15''x1'52,5'')</i></p>
+                                    <div id="hn_72_5000"></div>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#" >
+                                            <h3>1:2.000</h3>
+                                            <p><i>(25''x37,5'')</i></p>
+                                            <div id="hn_72_2000"></div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>      
+        </ul>
+    </div>
+
+    <div class="tree vn_2000">
+        <strong style="font-size: 30px;">MẢNH BẢN ĐỒ VN 2000</strong>
+        <ul>
+            <li>
+                <a href="#">
+                    <h3>1:1.000.000</h3>
+                    <p><i>(4°x6°)</i></p>
+                    <div  id="vn2000_1000000"></div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <h3>1:500.000</h3>
+                            <p><i>(2°x3°)</i></p>
+                            <div  id="vn2000_500000"></div>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="#"><h3>1:250.000</h3>
+                                    <p><i>(1°x1°30')</i></p>
+                                    <div id="vn2000_250000"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">
+                            <h3>1:100.000</h3>
+                            <p><i>(30'x30')</i></p>
+                            <div  id="vn2000_100000"></div>
+                        </a>
+                        <ul>
+                            <li><a href="#">
+                                    <h3>1:50.000</h3>
+                                    <p><i>(15'x15')</i></p>
+                                    <div  id="vn2000_50000"></div>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <h3>1:25.000</h3>
+                                            <p><i>(7'30''x7'30'')</i></p>
+                                            <div  id="vn2000_25000"></div>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a href="#">
+                                                    <h3>1:10.000</h3>
+                                                    <p><i>(3'45''x3'45'')</i></p>
+                                                    <div  id="vn2000_10000"></div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"> 
+                                    <h3>1:5.000</h3>
+                                    <p><i>(1'52,5''x1'52,5'')</i></p>
+                                    <div id="vn2000_5000"></div>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <h3>1:2.000</h3>
+                                            <p><i>(37,5''x37,5'')</i></p>
+                                            <div  id="vn2000_2000"></div>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a href="#">
+                                                    <h3>1:1.000</h3>
+                                                    <p><i>(18,75''x18,75'')</i></p>
+                                                    <div id="vn2000_1000"></div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <h3>1:500</h3>
+                                                    <p><i>(9,38''x9,38'')</i></p>
+                                                    <div  id="vn2000_500"></div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+            </li>      
+        </ul>
+    </div>
+
+    <div class="tree utm_qt hide_tree">
+        <strong style="font-size: 30px;">MẢNH BẢN ĐỒ UTM QUỐC TẾ</strong>
+        <ul>
+            <li>
+                <a href="#">
+                    <h3>Earth</h3>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <h3>1:1.000.000</h3>
+                            <p><i>(4°x6°)</i></p>
+                            <div id="utm_qt_1000000"></div>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="#"><h3>1:500.000</h3>
+                                    <p><i>(2°x3°)</i></p>
+                                    <div id="utm_qt_500000"></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"><h3>1:250.000</h3>
+                                    <p><i>(1°x1°30')</i></p>
+                                    <div id="utm_qt_250000"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">
+                            <h3>1:100.000</h3>
+                            <p><i>(30'x30')</i></p>
+                            <div id="utm_qt_100000"></div>
+                        </a>
+                        <ul>
+                            <li><a href="#">
+                                    <h3>1:50.000</h3>
+                                    <p><i>(15'x15')</i></p>
+                                    <div id="utm_qt_50000"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>      
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/proj4@2.7.3/dist/proj4.min.js"></script>
+    <script src="main.js"></script>
+    <script src="chuyen_htd.js"></script>
+</body>
+</html>
